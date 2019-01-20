@@ -14,13 +14,14 @@ const path = require('path')
 
 const port = 20001
 const secret = "Get_A_Better_Secret_#'.,35858"
+const dbname = "auth-o"
 
 ;(async () => {
     const app = express()
-    const passport = new Passport()
+    //const passport = new Passport()
 
-    const db = (await MongoClient.connect('mongodb://localhost:27017/', { useNewUrlParser: true })).db('powder_game')
-    mongoose.connect('mongodb://localhost:27017/auth-o', { useNewUrlParser: true })
+    const db = (await MongoClient.connect('mongodb://localhost:27017/', { useNewUrlParser: true })).db(dbname)
+    mongoose.connect('mongodb://localhost:27017/' + dbname, { useNewUrlParser: true })
 
     //app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon', 'faviconSmall.ico')))
     app.set('view engine', 'pug')
@@ -50,7 +51,7 @@ const secret = "Get_A_Better_Secret_#'.,35858"
         res.locals.path = req.path
         next()
     })
-    app.use(passport.router)
+    //app.use(passport.router)
 
     reload(app)
 
