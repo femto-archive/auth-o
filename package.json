@@ -24,6 +24,7 @@
   "homepage": "https://github.com/femto-host/Auth-O#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "connect-mongo": "^2.0.3",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "express-flash": "0.0.2",
