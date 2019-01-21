@@ -1,5 +1,6 @@
 const expressSession = require('express-session')
 const cookieParser = require('cookie-parser')
+const config = require('@femto-host/config')
 const MongoStore = require('connect-mongo')(expressSession)
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
@@ -10,18 +11,12 @@ const express = require('express')
 const reload = require('reload')
 const path = require('path')
 
-//const Passport = require('./modules/Passport')
-
-const port = 20001
-const secret = "Get_A_Better_Secret_#'.,35858"
-const dbname = "auth-o"
-
 ;(async () => {
     const app = express()
     //const passport = new Passport()
 
-    const db = (await MongoClient.connect('mongodb://localhost:27017/', { useNewUrlParser: true })).db(dbname)
-    mongoose.connect('mongodb://localhost:27017/' + dbname, { useNewUrlParser: true })
+    const db = (await MongoClient.connect('mongodb://localhost:27017/', { useNewUrlParser: true })).db(config.get('database'))
+    mongoose.connect('mongodb://localhost:27017/' + config.get('database'), { useNewUrlParser: true })
 
     //app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon', 'faviconSmall.ico')))
     app.set('view engine', 'pug')
@@ -29,9 +24,9 @@ const dbname = "auth-o"
     app.use(express.static('public'))
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(cookieParser(process.env.PG_SECRET || secret))
+    app.use(cookieParser(process.env.PG_SECRET || config.get('secret')))
     app.use(expressSession({
-        secret: process.env.PG_SECRET || secret,
+        secret: process.env.PG_SECRET || config.get('secret'),
         resave: false,
         saveUninitialized: false,
         store: new MongoStore({ db }),
@@ -51,10 +46,9 @@ const dbname = "auth-o"
         res.locals.path = req.path
         next()
     })
-    //app.use(passport.router)
 
     reload(app)
 
-    app.listen(port, () => console.log(`Listening on port ${port}`))
+    app.listen(config.get('port'), () => console.log(`Listening on port ${config.get('port')}`))
 })()
 
