@@ -1,3 +1,6 @@
+// Auth-O main file 
+
+// Module imports 
 const expressSession = require('express-session')
 const cookieParser = require('cookie-parser')
 const config = require('@femto-host/config')
@@ -11,14 +14,15 @@ const express = require('express')
 const reload = require('reload')
 const path = require('path')
 
+// Main function 
 ;(async () => {
     const app = express()
     //const passport = new Passport()
 
-    const db = (await MongoClient.connect('mongodb://localhost:27017/', { useNewUrlParser: true })).db(config.get('database'))
-    mongoose.connect('mongodb://localhost:27017/' + config.get('database'), { useNewUrlParser: true })
+    const db = (await MongoClient.connect('mongodb://' + config.get('databaseuri') + '/', { useNewUrlParser: true })).db(config.get('database'))
+    mongoose.connect('mongodb://' + config.get('databaseuri') + '/' + config.get('database'), { useNewUrlParser: true })
 
-    //app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon', 'faviconSmall.ico')))
+    app.use(favicon(path.join(__dirname, 'public', 'favicon', 'favicon.ico')))
     app.set('view engine', 'pug')
     app.set('views', 'renders/views')
     app.use(express.static('public'))
@@ -31,7 +35,7 @@ const path = require('path')
         saveUninitialized: false,
         store: new MongoStore({ db }),
         cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 7 * 4 // 28 days
+            maxAge: 1000 * 60 * 60 * 24 * 7 * 5 // 35 days
         }
     }))
     app.use(flash())
@@ -40,7 +44,7 @@ const path = require('path')
             success: req.flash('success'),
             error: req.flash('error')
         })
-        res.locals.req = req
+        //res.locals.req = req
         res.locals.development = process.env.NODE_ENV === 'development'
         app.locals.pretty = process.env.NODE_ENV === 'development'
         res.locals.path = req.path
