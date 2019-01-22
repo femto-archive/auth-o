@@ -2,4 +2,5 @@
     port: 20001
     secret: "GetABetterSecret843tu349gheagk3884"
     database: "auth-o"
+    databaseuri: "localhost:27017"
 }
