@@ -51,4 +51,3 @@ const path = require('path')
 
     app.listen(config.get('port'), () => console.log(`Listening on port ${config.get('port')}`))
 })()
-
