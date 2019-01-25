@@ -3,7 +3,11 @@ const ConsumerModel = require("../models/OAuthConsumer")
 class Consumer {
 	constructor() {}
 
-	createConsumer(parameters) {
+	getConsumer(realm_id, consumer_id, req, res) {
+		res.json({r: realm_id, c: consumer_id})
+	}
+	createConsumer(realm_id, consumer_id, parameters, req, res) {
+		/*
 		consumerOptions = {
 			name: parameters.name, 
 			consumer_secret: parameters.secret, 
@@ -13,8 +17,9 @@ class Consumer {
 		ConsumerObject.create(consumerOptions, function(err, consumer) {
 
 		}) 
+		*/
 	} 
-	removeConsumer(id) {
+	removeConsumer(realm_id, consumer_id, req, res) {
 		//ConsumerObject.remove
 	}
 }

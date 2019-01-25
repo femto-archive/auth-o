@@ -58,7 +58,7 @@ const HTTPConsumer = require('./http/HTTPConsumer')
     
 
     // API routes 
-    app.use("/api/v1/realm/:realm/consumer/:consumer", httpConsumer.router)
+    app.use("/api/v1", httpConsumer.router)
 
     reload(app)
 
