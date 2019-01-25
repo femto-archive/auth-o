@@ -3,12 +3,13 @@ const mongoose = require('mongoose')
 
 
 const OAuthAuthorisationCodesSchema = mongoose.Schema({
-    authorisation_code_id: ObjectId, 
+    //authorisation_code_id: ObjectId, 
     authorisation_code: String, 
     consumer_id: ObjectId, 
     user_id: ObjectId, 
     expires: Date, 
-    scope: String
+    scope: String, 
+    realm_id: ObjectId
 }, {
     timestamps: true
 })

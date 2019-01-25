@@ -3,13 +3,8 @@ const mongoose = require('mongoose')
 
 
 const OAuthAccessTokensSchema = mongoose.Schema({
-    //access_token_id: ObjectId, 
-    access_token: String, 
-    consumer_id: ObjectId, 
-    user_id: ObjectId, 
-    expires: Date, 
-    scope: String, 
-    realm_id: ObjectId
+    //group_id: ObjectId, 
+    name: String
 }, {
     timestamps: true
 })

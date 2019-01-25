@@ -2,14 +2,9 @@ const mongoose = require('mongoose')
 // OAUth_Access_Tokens { access_token_id, access_token, consumer_id, user_id, expires, scope }
 
 
-const OAuthAccessTokensSchema = mongoose.Schema({
-    //access_token_id: ObjectId, 
-    access_token: String, 
-    consumer_id: ObjectId, 
-    user_id: ObjectId, 
-    expires: Date, 
-    scope: String, 
-    realm_id: ObjectId
+const OAuthRealmsSchema = mongoose.Schema({
+    //realm_id: ObjectId, 
+    name: String
 }, {
     timestamps: true
 })

@@ -14,6 +14,8 @@ const express = require('express')
 const reload = require('reload')
 const path = require('path')
 
+const API_v1 = require(path.resolve("./modules/API_v1"))
+
 // Main function 
 ;(async () => {
     const app = express()
@@ -40,10 +42,12 @@ const path = require('path')
     }))
     app.use(flash())
     app.use((req, res, next) => {
+        /*
         Object.assign(res.locals, {
             success: req.flash('success'),
             error: req.flash('error')
         })
+        */
         //res.locals.req = req
         res.locals.development = process.env.NODE_ENV === 'development'
         app.locals.pretty = process.env.NODE_ENV === 'development'
@@ -51,7 +55,11 @@ const path = require('path')
         next()
     })
 
+    // API routes 
+    app.use("/api/v1", API_v1)
+
     reload(app)
 
     app.listen(config.get('port'), () => console.log(`Listening on port ${config.get('port')}`))
 })()
+

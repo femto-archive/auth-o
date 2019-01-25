@@ -3,11 +3,13 @@ const mongoose = require('mongoose')
 
 
 const OAuthUserSchema = mongoose.Schema({
-    user_id: ObjectId, 
+    //user_id: ObjectId, 
     email: String, 
     password: String, 
     verified: Boolean, 
-    auth_key: String
+    auth_key: String, 
+    realm_id: ObjectId, 
+    group_ids: [ObjectId]
 }, {
     timestamps: true
 })
