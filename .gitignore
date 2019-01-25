@@ -62,3 +62,5 @@ typings/
 
 # Exclude sublime projects 
 .sublime/
+
+build
