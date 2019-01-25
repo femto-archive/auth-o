@@ -25,7 +25,7 @@ const HTTPConsumer = require('./http/HTTPConsumer')
     const db = (await MongoClient.connect('mongodb://' + config.get('databaseuri') + '/', { useNewUrlParser: true })).db(config.get('database'))
     mongoose.connect('mongodb://' + config.get('databaseuri') + '/' + config.get('database'), { useNewUrlParser: true })
 
-    app.use(favicon(path.join(__dirname, 'public', 'favicon', 'favicon.ico')))
+    app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
     app.set('view engine', 'pug')
     app.set('views', 'renders/views')
     app.use(express.static('public'))
