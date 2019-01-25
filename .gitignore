@@ -63,5 +63,10 @@ typings/
 # Exclude sublime projects 
 .sublime/
 
+
 # Exclude the database 
 data/
+
+# Exclude the build
+build/
+
