@@ -14,11 +14,12 @@ const express = require('express')
 const reload = require('reload')
 const path = require('path')
 
-const API_v1 = require(path.resolve("./modules/API_v1"))
+const HTTPConsumer = require('./http/HTTPConsumer')
 
 // Main function 
 ;(async () => {
     const app = express()
+    const httpConsumer = new HTTPConsumer()
     //const passport = new Passport()
 
     const db = (await MongoClient.connect('mongodb://' + config.get('databaseuri') + '/', { useNewUrlParser: true })).db(config.get('database'))
@@ -54,9 +55,10 @@ const API_v1 = require(path.resolve("./modules/API_v1"))
         res.locals.path = req.path
         next()
     })
+    
 
     // API routes 
-    app.use("/api/v1", API_v1)
+    app.use("/api/v1/realm/:realm/consumer/:consumer", httpConsumer.router)
 
     reload(app)
 

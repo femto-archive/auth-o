@@ -7,7 +7,7 @@ const OAuthConsumerSchema = mongoose.Schema({
     consumer_name: {type: String, required: true}, 
     consumer_secret: {type: String, required: true}, 
     redirect_uri: {type: String, required: true}, 
-    realm_id: (type: ObjectId, required: true}
+    realm_id: {type: mongoose.Types.ObjectId, required: true}
 }, {
     timestamps: true
 })

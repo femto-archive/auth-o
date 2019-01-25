@@ -1,7 +1,8 @@
-const ConsumerObject = require("../models/OAuthConsumer")
+const ConsumerModel = require("../models/OAuthConsumer")
 
-class Consumer = {
+class Consumer {
 	constructor() {}
+
 	createConsumer(parameters) {
 		consumerOptions = {
 			name: parameters.name, 
