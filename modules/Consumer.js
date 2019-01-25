@@ -4,6 +4,7 @@ class Consumer {
 	constructor() {}
 
 	getConsumer(realm_id, consumer_id, req, res) {
+		//ConsumerModel.findOne
 		res.json({r: realm_id, c: consumer_id})
 	}
 	createConsumer(realm_id, consumer_id, parameters, req, res) {
