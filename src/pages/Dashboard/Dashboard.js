@@ -14,9 +14,10 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainItemList, secondaryItemList } from './ItemList';
 import SimpleLineChart from './SimpleLineChart';
 import SimpleTable from './SimpleTable';
+import RealmSelect from '../../components/RealmSelect';
 
 const drawerWidth = 240;
 
@@ -98,9 +99,16 @@ const styles = theme => ({
 });
 
 class Dashboard extends React.Component {
-    state = {
-        open: true,
-    };
+    constructor(props) {
+        super(props)
+
+        const { match } = this.props
+
+        this.state = {
+            open: true,
+            realm: match.params.realm
+        }
+    }
 
     handleDrawerOpen = () => {
         this.setState({ open: true });
@@ -112,13 +120,17 @@ class Dashboard extends React.Component {
 
     render() {
         const { classes } = this.props;
+        const { realm } = this.state
 
         return (
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar
                     position="absolute"
-                    className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
+                    className={classNames(
+                        classes.appBar,
+                        this.state.open && classes.appBarShift
+                    )}
                 >
                     <Toolbar disableGutters={!this.state.open} className={classes.toolbar}>
                         <IconButton
@@ -127,7 +139,7 @@ class Dashboard extends React.Component {
                             onClick={this.handleDrawerOpen}
                             className={classNames(
                                 classes.menuButton,
-                                this.state.open && classes.menuButtonHidden,
+                                this.state.open && classes.menuButtonHidden
                             )}
                         >
                             <MenuIcon />
@@ -139,8 +151,8 @@ class Dashboard extends React.Component {
                             noWrap
                             className={classes.title}
                         >
-                            Dashboard
-            </Typography>
+                            Authentication Dashboard ({realm})
+                        </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
                                 <NotificationsIcon />
@@ -151,7 +163,10 @@ class Dashboard extends React.Component {
                 <Drawer
                     variant="permanent"
                     classes={{
-                        paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+                        paper: classNames(
+                            classes.drawerPaper,
+                            !this.state.open && classes.drawerPaperClose
+                        )
                     }}
                     open={this.state.open}
                 >
@@ -161,21 +176,23 @@ class Dashboard extends React.Component {
                         </IconButton>
                     </div>
                     <Divider />
-                    <List>{mainListItems}</List>
+                    <RealmSelect />
                     <Divider />
-                    <List>{secondaryListItems}</List>
+                    <List>{mainItemList}</List>
+                    <Divider />
+                    <List>{secondaryItemList}</List>
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer} />
                     <Typography variant="h4" gutterBottom component="h2">
                         Orders
-          </Typography>
+                    </Typography>
                     <Typography component="div" className={classes.chartContainer}>
                         <SimpleLineChart />
                     </Typography>
                     <Typography variant="h4" gutterBottom component="h2">
                         Products
-          </Typography>
+                    </Typography>
                     <div className={classes.tableContainer}>
                         <SimpleTable />
                     </div>
