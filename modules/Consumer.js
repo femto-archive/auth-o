@@ -3,11 +3,51 @@ const ConsumerModel = require("../models/OAuthConsumer")
 class Consumer {
 	constructor() {}
 
-	getConsumer(realm_id, consumer_id, req, res) {
-		//ConsumerModel.findOne
-		res.json({r: realm_id, c: consumer_id})
+	getConsumer(realm_id, consumer_id, callback) {
+		ConsumerModel.findOne({_id: consumer_id, realm_id: realm_id}, function(err, consumer) {
+			if (err) {
+				callback({
+					error: {
+						number: 1, 
+						message: "Error", 
+						err: err
+					}, 
+					data: {}
+				})
+			}
+			else if (!consumer) {
+				callback({
+					error: {
+						number: 2, 
+						message: "No Consumer", 
+						err: null
+					}, 
+					data: {}, 
+					initial: {
+						realm_id: realm_id, 
+						consumer_id: consumer_id
+					}
+				})
+			}
+			else {
+				callback({
+					error: {
+						number: 0, 
+						message: "No Error", 
+						err: null
+					}, 
+					data: {
+						consumer: consumer
+					}, 
+					initial: {
+						realm_id: realm_id, 
+						consumer_id: consumer_id
+					}
+				})
+			}
+		})
 	}
-	createConsumer(realm_id, consumer_id, parameters, req, res) {
+	createConsumer(realm_id, consumer_id, parameters, callback) {
 		/*
 		consumerOptions = {
 			name: parameters.name, 
@@ -20,9 +60,17 @@ class Consumer {
 		}) 
 		*/
 	} 
-	removeConsumer(realm_id, consumer_id, req, res) {
+	removeConsumer(realm_id, consumer_id, callback) {
 		//ConsumerObject.remove
 	}
 }
 
 module.exports = Consumer 
+
+
+/*
+{
+  error: { code: errNumber, message: humanReadable },
+  data: {} // arbitrary data result format.
+}
+*/
