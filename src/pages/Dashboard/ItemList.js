@@ -13,104 +13,30 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import DnsIcon from '@material-ui/icons/Dns';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
-import BoringLink from '../../components/BoringLink.js'
+import BoringLink from '../../components/BoringLink'
+import SidebarItem from '../../components/SidebarItem'
 
-export const mainItemList = (
-    <div>
-        <ListSubheader inset>Configure</ListSubheader>
-        <BoringLink to='/admin/default/settings'>
-            <ListItem button>
-                <ListItemIcon>
-                    <SettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Realm Settings" />
-            </ListItem>
-        </BoringLink>
-        <BoringLink to='/admin/default/consumers'>
-            <ListItem button>
-                <ListItemIcon>
-                    <ComputerIcon />
-                </ListItemIcon>
-                <ListItemText primary="Consumers" />
-            </ListItem>
-        </BoringLink>
-        <BoringLink to='/admin/default/roles'>
-            <ListItem button>
-                <ListItemIcon>
-                    <PeopleIcon />
-                </ListItemIcon>
-                <ListItemText primary="Roles" />
-            </ListItem>
-        </BoringLink>
-        <BoringLink to='/admin/default/providers'>
-            <ListItem button>
-                <ListItemIcon>
-                    <CompareArrowsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Identity Providers" />
-            </ListItem>
-        </BoringLink>
-        <BoringLink to='/admin/default/federation'>
-            <ListItem button>
-                <ListItemIcon>
-                    <DnsIcon />
-                </ListItemIcon>
-                <ListItemText primary="User Federation" />
-            </ListItem>
-        </BoringLink>
-        <BoringLink to='/admin/default/authentication'>
-            <ListItem button>
-                <ListItemIcon>
-                    <LockIcon />
-                </ListItemIcon>
-                <ListItemText primary="Authentication" />
-            </ListItem>
-        </BoringLink>
-    </div>
-);
+export const mainItemList = (realm, component) => {
+    return (
+        <div>
+            <ListSubheader inset>Configure</ListSubheader>
+            <SidebarItem to='settings' realm={realm} component={component} icon={<SettingsIcon />} label="Realm Settings" />
+            <SidebarItem to='consumers' realm={realm} component={component} icon={<ComputerIcon />} label="Consumers" />
+            <SidebarItem to='roles' realm={realm} component={component} icon={<PeopleIcon />} label="Roles" />
+            <SidebarItem to='providers' realm={realm} component={component} icon={<CompareArrowsIcon />} label="Identity Providers" />
+            <SidebarItem to='federation' realm={realm} component={component} icon={<DnsIcon />} label="User Federation" />
+            <SidebarItem to='authentication' realm={realm} component={component} icon={<LockIcon />} label="Authentication" />
+        </div>
+    );
+}
 
-export const secondaryItemList = (
+export const secondaryItemList = (realm, component) => (
     <div>
         <ListSubheader inset>Manage</ListSubheader>
-        <BoringLink to='/admin/default/groups'>
-        <ListItem button>
-            <ListItemIcon>
-                <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Groups" />
-        </ListItem>
-        </BoringLink>
-        <BoringLink to='/admin/default/users'>
-            <ListItem button>
-                <ListItemIcon>
-                    <PersonIcon />
-                </ListItemIcon>
-                <ListItemText primary="Users" />
-            </ListItem>
-        </BoringLink>
-        <BoringLink to='/admin/default/sessions'>
-            <ListItem button>
-                <ListItemIcon>
-                    <TableChartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Sessions" />
-            </ListItem>
-        </BoringLink>
-        <BoringLink to='/admin/default/events'>
-            <ListItem button>
-                <ListItemIcon>
-                    <AssignmentIcon />
-                </ListItemIcon>
-                <ListItemText primary="Events" />
-            </ListItem>
-        </BoringLink>
-        <BoringLink to='/admin/default/import'>
-            <ListItem button>
-                <ListItemIcon>
-                    <ImportExportIcon />
-                </ListItemIcon>
-                <ListItemText primary="Import / Export" />
-            </ListItem>
-        </BoringLink>
+        <SidebarItem to='groups' realm={realm} component={component} icon={<PeopleIcon />} label="Groups" />
+        <SidebarItem to='users' realm={realm} component={component} icon={<PersonIcon />} label="Users" />
+        <SidebarItem to='sessions' realm={realm} component={component} icon={<TableChartIcon />} label="Sessions" />
+        <SidebarItem to='events' realm={realm} component={component} icon={<AssignmentIcon />} label="Events" />
+        <SidebarItem to='import' realm={realm} component={component} icon={<ImportExportIcon />} label="Import / Export" />
     </div>
 );

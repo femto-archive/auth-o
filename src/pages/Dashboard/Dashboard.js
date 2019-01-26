@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -15,9 +16,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainItemList, secondaryItemList } from './ItemList';
-import SimpleLineChart from './SimpleLineChart';
-import SimpleTable from './SimpleTable';
 import RealmSelect from '../../components/RealmSelect';
+import RealmSettings from '../RealmSettings/RealmSettings';
 
 const drawerWidth = 240;
 
@@ -99,14 +99,35 @@ const styles = theme => ({
 });
 
 class Dashboard extends React.Component {
-    constructor(props) {
-        super(props)
+    state = {
+        open: true,
+        realm: undefined,
+        realms: []
+    }
 
+    async componentDidMount() {
         const { match } = this.props
 
-        this.state = {
-            open: true,
-            realm: match.params.realm
+        const realms = await fetch('/api/v1/realms')
+            .then(res => res.json())
+            .then(res => res.data)
+
+        const realm = await fetch('/api/v1/realm/' + match.params.realm)
+            .then(res => res.json())
+            .then(res => res.data)
+
+        this.setState({ realms, realm })
+    }
+
+    async componentDidUpdate(prevProps, prevState) {
+        const { match } = this.props
+
+        if (match.params.realm !== prevProps.match.params.realm) {
+            const realm = await fetch('/api/v1/realm/' + match.params.realm)
+                .then(res => res.json())
+                .then(res => res.data)
+
+            this.setState({ realm })
         }
     }
 
@@ -119,8 +140,9 @@ class Dashboard extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
-        const { realm } = this.state
+        const { classes, match } = this.props;
+        const { realm, realms } = this.state
+        const component = match.params.component
 
         return (
             <div className={classes.root}>
@@ -151,7 +173,7 @@ class Dashboard extends React.Component {
                             noWrap
                             className={classes.title}
                         >
-                            Authentication Dashboard ({realm})
+                            Authentication Dashboard ({realm ? realm.name.human : 'Loading...'})
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
@@ -176,26 +198,14 @@ class Dashboard extends React.Component {
                         </IconButton>
                     </div>
                     <Divider />
-                    <RealmSelect />
+                    <RealmSelect realms={realms} selected={realm} onChange={newRealm => this.props.history.push(`/admin/${newRealm.name.slug}/${match.params.component}`)}/>
+                    {/* <Divider /> */}
+                    <List>{mainItemList(realm ? realm.name.slug : 'Loading...', component)}</List>
                     <Divider />
-                    <List>{mainItemList}</List>
-                    <Divider />
-                    <List>{secondaryItemList}</List>
+                    <List>{secondaryItemList(realm ? realm.name.slug : 'Loading...', component)}</List>
                 </Drawer>
                 <main className={classes.content}>
-                    <div className={classes.appBarSpacer} />
-                    <Typography variant="h4" gutterBottom component="h2">
-                        Orders
-                    </Typography>
-                    <Typography component="div" className={classes.chartContainer}>
-                        <SimpleLineChart />
-                    </Typography>
-                    <Typography variant="h4" gutterBottom component="h2">
-                        Products
-                    </Typography>
-                    <div className={classes.tableContainer}>
-                        <SimpleTable />
-                    </div>
+                    <Route path='/admin/:realm/settings' render={() => <RealmSettings classes={classes}/>}/>
                 </main>
             </div>
         );
