@@ -55,6 +55,10 @@ const HTTPConsumer = require('./http/HTTPConsumer')
         res.locals.path = req.path
         next()
     })
+    app.use((req, res, next) => {
+        // Strip URL trailing slashes here 
+        next()
+    })
     
 
     // API routes 
