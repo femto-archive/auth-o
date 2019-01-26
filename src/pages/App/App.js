@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Dashboard from '../Dashboard/Dashboard';
 import './App.css';
 import RealmRedirect from '../../components/RealmRedirect';
@@ -16,7 +16,8 @@ class App extends Component {
           <Route path="/" exact component={Index} />
           <Route path="/docs/" component={Docs} />
           <Route path="/admin/" exact component={RealmRedirect} />
-          <Route path="/admin/:realm" component={Dashboard} />
+          <Redirect from="/admin/:realm" to="/admin/:realm/general" exact />
+          <Route path="/admin/:realm/:component" exact component={Dashboard} />
           <Route component={NotFound} />
         </Switch>
       </Router>

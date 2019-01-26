@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 export default class RealmSelect extends Component {
-    state = {
-        realms: []
-    }
+    async handleChange(event, child) {
+        const { onChange, realms } = this.props
+        const selected = realms.find(realm => realm.name.slug === child.key)
 
-    async componentDidMount() {
-        const realms = [] /* get realms */
-
-        this.setState({ realms })
+        onChange(selected)
     }
 
     render() {
-        const { realms } = this.state
+        const { realms, selected } = this.props
 
-        if (realms) return (<p>realms</p>)
-
-        // We don't have a list of realms yet!  We should wait for a bit.
-        return (<p>nothing</p>)
+        return (
+            <FormControl>
+                <Select
+                    value={selected ? selected.name.slug : ''}
+                    onChange={this.handleChange.bind(this)}
+                    displayEmpty
+                    name="realm"
+                >
+                    {realms.map(realm => 
+                        <MenuItem key={realm.name.slug} value={realm.name.slug}>
+                            {realm.name.human}
+                        </MenuItem>
+                    )}
+                </Select>
+            </FormControl>
+        )
     }
 }

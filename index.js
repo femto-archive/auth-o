@@ -15,11 +15,13 @@ const reload = require('reload')
 const path = require('path')
 
 const HTTPConsumer = require('./http/HTTPConsumer')
+const HTTPRealm = require('./http/HTTPRealm')
 
 // Main function 
 ;(async () => {
     const app = express()
     const httpConsumer = new HTTPConsumer()
+    const httpRealm = new HTTPRealm()
     //const passport = new Passport()
 
     const db = (await MongoClient.connect('mongodb://' + config.get('databaseuri') + '/', { useNewUrlParser: true })).db(config.get('database'))
@@ -59,6 +61,7 @@ const HTTPConsumer = require('./http/HTTPConsumer')
 
     // API routes 
     app.use("/api/v1", httpConsumer.router)
+    app.use("/api/v1", httpRealm.router)
 
     reload(app)
 
