@@ -13,13 +13,23 @@ class HTTPConsumer {
     }
 
     getConsumer(req, res) {
-        this.consumer.getConsumer(req.params.realm, req.params.consumer, req, res)
+        this.consumer.getConsumer(req.params.realm, req.params.consumer, function(params) {
+            params.initial = {
+                realm_id: req.params.realm, 
+                consumer_id: req.params.consumer
+            }
+        	res.json(params)
+        })
     }
     addConsumer(req, res) {
-    	this.consumer.createConsumer(req.params.realm, req.params.consumer, {}, req, res)
+    	this.consumer.createConsumer(req.params.realm, req.params.consumer, {}, function(params) {
+
+    	})
     }
     removeConsumer(req, res) {
-    	this.consumer.removeConsumer(req.params.realm, req.params.consumer, req, res)
+    	this.consumer.removeConsumer(req.params.realm, req.params.consumer, function(params) {
+
+    	})
     }
 }
 
