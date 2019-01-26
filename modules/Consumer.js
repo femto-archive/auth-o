@@ -16,7 +16,7 @@ class Consumer {
 					data: {}
 				})
 			}
-			else if (!consumer) {
+			else if (!consumers) {
 				callback({
 					error: {
 						number: 2, 
@@ -28,11 +28,6 @@ class Consumer {
 			}
 			else {
 				callback({
-					error: {
-						number: 0, 
-						message: "No Error", 
-						err: null
-					}, 
 					data: {
 						consumer: consumers
 					}
@@ -41,11 +36,11 @@ class Consumer {
 		})
 	}
 	createConsumer(realm_id, parameters, callback) {
-		consumerOptions = {
+		let consumerOptions = {
 			name: parameters.name, 
 			consumer_secret: parameters.secret, 
 			redirect_uri: parameters.uri, 
-			realm_id: parameters.realm
+			realm_id: realm_id
 		}
 		RealmModel.findById(realm_id, function(err, realm) {
 			if (err) {
@@ -92,11 +87,6 @@ class Consumer {
 					}
 					else {
 						callback({
-							error: {
-								number: 0, 
-								message: "No Error", 
-								err: null
-							}, 
 							data: {
 								consumer_id: consumer._id, 
 								consumer: consumer
@@ -131,11 +121,6 @@ class Consumer {
 			}
 			else {
 				callback({
-					error: {
-						number: 0, 
-						message: "No Error", 
-						err: null
-					}, 
 					data: {
 						consumer: consumer
 					}
@@ -144,7 +129,12 @@ class Consumer {
 		})
 	}
 	updateConsumer(realm_id, consumer_id, parameters, callback) {
-
+		let consumerOptions = {
+			name: parameters.name, 
+			consumer_secret: parameters.secret, 
+			redirect_uri: parameters.uri, 
+			realm_id: realm_id
+		}
 		callback()
 	}
 	removeConsumer(realm_id, consumer_id, callback) {
@@ -171,11 +161,6 @@ class Consumer {
 			}
 			else {
 				callback({
-					error: {
-						number: 0, 
-						message: "No Error", 
-						err: null
-					}, 
 					data: {
 						consumer: consumer
 					}

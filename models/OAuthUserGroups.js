@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 
 const OAuthAccessTokensSchema = mongoose.Schema({
     //group_id: ObjectId, 
-    name: String
+    name: {type: String, required: true, unique: true}
 }, {
     timestamps: true
 })

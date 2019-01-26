@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 
 const OAuthRealmsSchema = mongoose.Schema({
     //realm_id: ObjectId, 
-    name: String
+    name: {type: String, required: true, unique: true}, 
+    slug: {type: String, required: true, unique: true}
 }, {
     timestamps: true
 })

@@ -4,11 +4,12 @@ const mongoose = require('mongoose')
 
 const OAuthUserSchema = mongoose.Schema({
     //user_id: ObjectId, 
+    username: {type: String, required: true, unique: true}
     email: String, 
-    password: String, 
-    verified: Boolean, 
+    password: {type: String, required: true}, 
+    verified: {type: Boolean, required: true, default: false}, 
     auth_key: String, 
-    realm_id: ObjectId, 
+    realm_id: {type: ObjectId, required: true}, 
     group_ids: [ObjectId]
 }, {
     timestamps: true

@@ -7,6 +7,7 @@ class HTTPRealm {
         this.realm = new Realm()
         this.router = express.Router()
 
+        this.router.get('/realm', this.getRealms.bind(this))
         this.router.get('/realms', this.getRealms.bind(this))
         this.router.get('/realm/:realm', this.getRealm.bind(this))
         this.router.post('/realm/:realm', this.addRealm.bind(this))
@@ -14,6 +15,14 @@ class HTTPRealm {
     }
 
     getRealms(req, res) {
+        this.realm.getRealms(function(params) {
+            params.initial = {
+                realm_id: req.params.realm, 
+                consumer_id: req.params.consumer
+            }
+            res.json(params)
+        })
+        /*
         res.json({
             data: [{
                 _id: '4g3qj98gjq',
@@ -35,6 +44,7 @@ class HTTPRealm {
                 }
             }]
         })
+        */
     }
 
     getRealm(req, res) {
