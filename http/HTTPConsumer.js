@@ -17,7 +17,7 @@ class HTTPConsumer {
     }
 
     async getConsumers(req, res) {
-        res.json(await this.consumer.getConsumers({ realm: req.params.realm }))
+        res.json(await this.consumer.getConsumers({ realm: req.realm._id }))
     }
 
     addConsumer(req, res) {

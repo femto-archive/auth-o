@@ -1,7 +1,4 @@
 import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ComputerIcon from '@material-ui/icons/Computer';
@@ -13,7 +10,6 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import DnsIcon from '@material-ui/icons/Dns';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
-import BoringLink from '../../components/BoringLink'
 import SidebarItem from '../../components/SidebarItem'
 
 export const mainItemList = (realm, component) => {

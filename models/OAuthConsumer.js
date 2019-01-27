@@ -10,7 +10,9 @@ const OAuthConsumerSchema = mongoose.Schema({
     redirectURI: { type: String, required: true },
     realm: { type: ObjectId, ref: 'Realm', autopopulate: true }
 }, {
-    timestamps: true
+    timestamps: true,
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true }
 })
 
 OAuthConsumerSchema.virtual('display').get(function() {

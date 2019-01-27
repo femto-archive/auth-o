@@ -5,8 +5,10 @@ class Consumer {
 	constructor() {}
 
 	async getConsumers(params) {
+		console.log(params)
 		return ConsumerModel.find(params)
 			.then(consumers => {
+				console.log(consumers)
 				if (!consumers.length) return new ERRNOCONSUMERS()
 				return consumers
 			})

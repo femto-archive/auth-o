@@ -18,6 +18,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainItemList, secondaryItemList } from './ItemList';
 import RealmSelect from '../../components/RealmSelect';
 import RealmSettings from '../RealmSettings/RealmSettings';
+import Consumers from '../Consumers/Consumers';
 
 const drawerWidth = 240;
 
@@ -205,7 +206,12 @@ class Dashboard extends React.Component {
                     <List>{secondaryItemList(realm ? realm.name.slug : 'Loading...', component)}</List>
                 </Drawer>
                 <main className={classes.content}>
-                    <Route path='/admin/:realm/settings' render={() => <RealmSettings classes={classes}/>}/>
+                    {realm
+                        ?   (<div>
+                                <Route path='/admin/:realm/settings' render={() => <RealmSettings classes={classes} realm={realm}/>}/>
+                                <Route path='/admin/:realm/consumers' render={() => <Consumers classes={classes} realm={realm}/>}/>
+                            </div>)
+                        : <p>Loading...</p>}
                 </main>
             </div>
         );
