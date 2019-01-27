@@ -27,7 +27,7 @@ class HTTPRealm {
     }
 
     async getRealm(req, res) {
-        const realm = await Realm.getRealm({ 'name.slug': req.params.realm })
+        const realm = await Realm.getRealm(req.params.realm)
         res.json(realm)
     }
 

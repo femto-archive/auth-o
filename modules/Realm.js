@@ -1,5 +1,5 @@
 const RealmModel = require("../models/Realm")
-const { ERRNOREALM, ERRONOREALMS, ERRUNKNOWN } = Errors
+const { ERRNOREALM, ERRUNKNOWN } = Errors
 
 class Realm {
 	cobstructor() {} 
@@ -16,7 +16,6 @@ class Realm {
 	static getRealms() {
 		return RealmModel.find({})
 			.then(realms => {
-				if (!realms.length) return new ERRONOREALMS()
 				return realms
 			})
 			.catch(err => new ERRUNKNOWN({ err }))

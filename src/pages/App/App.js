@@ -16,7 +16,7 @@ class App extends Component {
           <Route path="/" exact component={Index} />
           <Route path="/docs/" component={Docs} />
           <Route path="/admin/" exact component={RealmRedirect} />
-          <Redirect from="/admin/:realm" to="/admin/:realm/general" exact />
+          <Redirect from="/admin/:realm" to="/admin/:realm/settings" exact />
           <Route path="/admin/:realm/:component" exact component={Dashboard} />
           <Route component={NotFound} />
         </Switch>
