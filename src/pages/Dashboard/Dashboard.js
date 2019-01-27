@@ -110,11 +110,9 @@ class Dashboard extends React.Component {
 
         const realms = await fetch('/api/v1/realms')
             .then(res => res.json())
-            .then(res => res.data)
 
         const realm = await fetch('/api/v1/realm/' + match.params.realm)
             .then(res => res.json())
-            .then(res => res.data)
 
         this.setState({ realms, realm })
     }
@@ -125,7 +123,6 @@ class Dashboard extends React.Component {
         if (match.params.realm !== prevProps.match.params.realm) {
             const realm = await fetch('/api/v1/realm/' + match.params.realm)
                 .then(res => res.json())
-                .then(res => res.data)
 
             this.setState({ realm })
         }

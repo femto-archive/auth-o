@@ -1,25 +1,27 @@
 const express = require('express')
 
 const Consumer = require('../modules/Consumer')
-
+const HTTPRealm = require('./HTTPRealm')
 
 class HTTPConsumer {
     constructor() {
         this.consumer = new Consumer()
         this.router = express.Router()
 
-        this.router.get('/realm/:realm/consumer', this.getConsumers.bind(this))
-        this.router.get('/realm/:realm/consumers', this.getConsumers.bind(this))
-        this.router.post('/realm/:realm/consumer', this.addConsumer.bind(this))
-        this.router.get('/realm/:realm/consumer/:consumer', this.getConsumer.bind(this))
-        this.router.put('/realm/:realm/consumer/:consumer', this.updateConsumer.bind(this))
-        this.router.delete('/realm/:realm/consumer/:consumer', this.removeConsumer.bind(this))
+        this.router.get('/realm/:realm/consumer', HTTPRealm.ensureRealmExists, this.getConsumers.bind(this))
+        this.router.get('/realm/:realm/consumers', HTTPRealm.ensureRealmExists, this.getConsumers.bind(this))
+        this.router.post('/realm/:realm/consumer', HTTPRealm.ensureRealmExists, this.addConsumer.bind(this))
+        this.router.get('/realm/:realm/consumer/:consumer', HTTPRealm.ensureRealmExists, this.getConsumer.bind(this))
+        this.router.put('/realm/:realm/consumer/:consumer', HTTPRealm.ensureRealmExists, this.updateConsumer.bind(this))
+        this.router.delete('/realm/:realm/consumer/:consumer', HTTPRealm.ensureRealmExists, this.removeConsumer.bind(this))
     }
 
     async getConsumers(req, res) {
         res.json(await this.consumer.getConsumers({ realm: req.params.realm }))
     }
+
     addConsumer(req, res) {
+        
         this.consumer.createConsumer(req.params.realm, {
             name: req.body.name, 
             secret: req.body.secret, 

@@ -1,62 +1,34 @@
 const express = require('express')
 
-const Realm = class Realm {} || require('../modules/Realm')
+const Realm = require('../modules/Realm')
 
 class HTTPRealm {
     constructor() {
-        this.realm = new Realm()
         this.router = express.Router()
 
         this.router.get('/realm', this.getRealms.bind(this))
+        this.router.post('/realm', this.addRealm.bind(this))
         this.router.get('/realms', this.getRealms.bind(this))
-        this.router.get('/realm/:realm', this.getRealm.bind(this))
-        this.router.post('/realm/:realm', this.addRealm.bind(this))
-        this.router.delete('/realm/:realm', this.removeRealm.bind(this))
+        this.router.get('/realm/:realm', HTTPRealm.ensureRealmExists, this.getRealm.bind(this))
+        this.router.delete('/realm/:realm', HTTPRealm.ensureRealmExists, this.removeRealm.bind(this))
     }
 
-    getRealms(req, res) {
-        this.realm.getRealms(function(params) {
-            params.initial = {
-                realm_id: req.params.realm, 
-                consumer_id: req.params.consumer
-            }
-            res.json(params)
-        })
-        /*
-        res.json({
-            data: [{
-                _id: '4g3qj98gjq',
-                name: {
-                    slug: 'example-realm',
-                    human: 'Example Realm'
-                }
-            }, {
-                _id: '4g3qj98gjq2',
-                name: {
-                    slug: 'example-realm-2',
-                    human: 'Example Realm 2'
-                }
-            }, {
-                _id: '4g3qj98gjq3',
-                name: {
-                    slug: 'example-realm-3',
-                    human: 'Example Realm 3'
-                }
-            }]
-        })
-        */
+    static async ensureRealmExists(req, res, next) {
+        const realm = await Realm.getRealm(req.params.realm)
+        if (realm.isError) return res.json(realm)
+
+        req.realm = realm
+        next()
     }
 
-    getRealm(req, res) {
-        res.json({
-            data: {
-                _id: '4g3qj98gjq',
-                name: {
-                    slug: 'example-realm',
-                    human: 'Example Realm'
-                }
-            }
-        })
+    async getRealms(req, res) {
+        const realms = await Realm.getRealms()
+        res.json(realms)
+    }
+
+    async getRealm(req, res) {
+        const realm = await Realm.getRealm({ 'name.slug': req.params.realm })
+        res.json(realm)
     }
 
     addRealm(req, res) {

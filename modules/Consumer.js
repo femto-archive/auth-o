@@ -1,6 +1,4 @@
 const ConsumerModel = require("../models/OAuthConsumer")
-const RealmModel = require("../models/OAuthRealms")
-
 const { ERRNOCONSUMERS, ERRUNKNOWN } = Errors
 
 class Consumer {
@@ -16,15 +14,9 @@ class Consumer {
 	}
 
 	async createConsumer(params) {
-		return RealmModel.findById(params.realm)
-			.then(async realm => {
-				if (!realm) return new ERRNOREALM({ realm: params.realm })
-				
-				const consumer = new ConsumerModel(params)
-				await consumer.save()
-
-				return consumer
-			})
+		const consumer = new ConsumerModel(params)
+		return consumer
+			.save()
 			.catch(err => new ERRUNKNOWN({ err }))
 	}
 

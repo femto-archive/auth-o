@@ -14,6 +14,7 @@ const favicon = require('serve-favicon')
 const express = require('express')
 const reload = require('reload')
 const path = require('path')
+require('pretty-error').start()
 
 global.Errors = errors('errors.json')
 
@@ -28,7 +29,11 @@ const HTTPRealm = require('./http/HTTPRealm')
     //const passport = new Passport()
 
     const db = (await MongoClient.connect('mongodb://' + config.get('databaseuri') + '/', { useNewUrlParser: true })).db(config.get('database'))
-    mongoose.connect('mongodb://' + config.get('databaseuri') + '/' + config.get('database'), { useNewUrlParser: true })
+    
+    mongoose.set('useNewUrlParser', true)
+    mongoose.set('useFindAndModify', false)
+    mongoose.set('useCreateIndex', true)
+    mongoose.connect('mongodb://' + config.get('databaseuri') + '/' + config.get('database'))
 
     app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
     app.set('view engine', 'pug')

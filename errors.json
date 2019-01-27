@@ -14,5 +14,9 @@
     "ERRNOREALM": {
         "msg": "No realm was found matching {realm}",
         "code": 404
+    },
+    "ERRNOREALMS": {
+        "msg": "No realms were found.",
+        "code": 404
     }
 }

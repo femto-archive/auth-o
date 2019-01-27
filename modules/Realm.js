@@ -1,43 +1,33 @@
-const RealmModel = require("../models/OAuthRealms")
+const RealmModel = require("../models/Realm")
+const { ERRNOREALM, ERRONOREALMS, ERRUNKNOWN } = Errors
 
 class Realm {
 	cobstructor() {} 
 
-	getRealms(callback) {
-		RealmModel.find({}, function(err, realms) {
-			if (err) {
-				callback({
-					error: {
-						number: 1, 
-						message: "Error", 
-						err: err
-					}, 
-					data: {}
-				})
-			}
-			else if (!realms) {
-				callback({
-					error: {
-						number: 2, 
-						message: "No Realms", 
-						err: null
-					}, 
-					data: {}
-				})
-			}
-			else {
-				callback({
-					error: {
-						number: 0, 
-						message: "No Error", 
-						err: null
-					}, 
-					data: {
-						realm: realms
-					}
-				})
-			}
-		})
+	static getRealm(slug) {
+		return RealmModel.findOne({ 'name.slug': slug })
+			.then(realm => {
+				if (!realm) return new ERRNOREALM()
+				return realm
+			})
+			.catch(err => new ERRUNKNOWN({ err }))
+	}
+
+	static getRealms() {
+		return RealmModel.find({})
+			.then(realms => {
+				if (!realms.length) return new ERRONOREALMS()
+				return realms
+			})
+			.catch(err => new ERRUNKNOWN({ err }))
+	}
+
+	static createRealm(realmParams) {
+		const realm = new RealmModel(realmParams)
+
+		return realm
+			.save()
+			.catch(err => new ERRUNKNOWN({ err }))
 	}
 }
 
