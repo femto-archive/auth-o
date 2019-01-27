@@ -4,6 +4,7 @@
 const expressSession = require('express-session')
 const cookieParser = require('cookie-parser')
 const config = require('@femto-host/config')
+const errors = require('@femto-host/errors')
 const MongoStore = require('connect-mongo')(expressSession)
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
@@ -13,6 +14,8 @@ const favicon = require('serve-favicon')
 const express = require('express')
 const reload = require('reload')
 const path = require('path')
+
+global.Errors = errors('errors.json')
 
 const HTTPConsumer = require('./http/HTTPConsumer')
 const HTTPRealm = require('./http/HTTPRealm')
@@ -64,6 +67,10 @@ const HTTPRealm = require('./http/HTTPRealm')
     
 
     // API routes 
+    app.use("/api/", (req, res, next) => {
+        errors(res)
+        next()
+    })
     app.use("/api/v1", httpConsumer.router)
     app.use("/api/v1", httpRealm.router)
 

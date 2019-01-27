@@ -20,4 +20,4 @@ OAuthAccessTokensSchema.virtual('attribute').get(function() {
 })
 */
 
-module.exports = mongoose.model('OAuthAccessTokens', OAuthAccessTokensSchema)
+module.exports = mongoose.model('OAuthRealms', OAuthRealmsSchema)

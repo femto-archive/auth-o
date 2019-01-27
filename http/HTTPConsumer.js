@@ -2,6 +2,7 @@ const express = require('express')
 
 const Consumer = require('../modules/Consumer')
 
+
 class HTTPConsumer {
     constructor() {
         this.consumer = new Consumer()
@@ -15,17 +16,12 @@ class HTTPConsumer {
         this.router.delete('/realm/:realm/consumer/:consumer', this.removeConsumer.bind(this))
     }
 
-    getConsumers(req, res) {
-        this.consumer.getConsumers(req.params.realm, function(params) {
-            params.initial = {
-                realm_id: req.params.realm, 
-                consumer_id: req.params.consumer
-            }
-            res.json(params)
-        })
+    async getConsumers(req, res) {
+        res.json(await this.consumer.getConsumers({ realm: req.params.realm }))
     }
     addConsumer(req, res) {
-        this.consumer.createConsumer(req.params.realm, {name: req.body.name, 
+        this.consumer.createConsumer(req.params.realm, {
+            name: req.body.name, 
             secret: req.body.secret, 
             uri: req.body.uri
         }, function(params) {

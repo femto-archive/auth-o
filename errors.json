@@ -1,0 +1,18 @@
+{
+    "ERRUNKNOWN": {
+        "msg": "{err}",
+        "code": 500
+    },
+    "ERRNOCONSUMER": {
+        "msg": "The consumer {consumer} was not found.",
+        "code": 404
+    },
+    "ERRNOCONSUMERS": {
+        "msg": "No consumers were found.",
+        "code": 404
+    },
+    "ERRNOREALM": {
+        "msg": "No realm was found matching {realm}",
+        "code": 404
+    }
+}
