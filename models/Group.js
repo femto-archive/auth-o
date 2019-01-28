@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const GroupSchema = mongoose.Schema({
     name: {
-        human: { type: String },
+        human: { type: String, required: true, unique: true },
         slug: { type: String, required: true, unique: true }
     }
 }, {
