@@ -77,8 +77,8 @@ const HTTPRealm = require('./http/HTTPRealm')
         errors(res)
         next()
     })
-    app.use("/api/v1", HTTPConsumer.router)
-    app.use("/api/v1", HTTPRealm.router)
+    app.use("/api/v1", httpConsumer.router)
+    app.use("/api/v1", httpRealm.router)
 
     reload(app)
 
