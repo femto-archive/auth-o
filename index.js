@@ -14,6 +14,7 @@ const favicon = require('serve-favicon')
 const express = require('express')
 const reload = require('reload')
 const path = require('path')
+const crypto = require('crypto')
 require('pretty-error').start()
 
 global.Errors = errors('errors.json')
@@ -72,12 +73,12 @@ const HTTPRealm = require('./http/HTTPRealm')
     
 
     // API routes 
-    app.use("/api/", (req, res, next) => {
+    app.use("/api", (req, res, next) => {
         errors(res)
         next()
     })
-    app.use("/api/v1", httpConsumer.router)
-    app.use("/api/v1", httpRealm.router)
+    app.use("/api/v1", HTTPConsumer.router)
+    app.use("/api/v1", HTTPRealm.router)
 
     reload(app)
 
