@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
-import ConsumerTable from './ConsumerTable';
+import EnhancedTable from './EnhancedTable';
 
 export default class Consumers extends Component {
     state = {}
@@ -14,7 +14,7 @@ export default class Consumers extends Component {
                 <Typography variant="h4" gutterBottom component="h2">
                     Consumers
                 </Typography>
-                <ConsumerTable realm={realm}/>
+                <EnhancedTable realm={realm}/>
             </div>
         )
     }

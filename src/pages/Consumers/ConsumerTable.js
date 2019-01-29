@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import dayjs from 'dayjs';
-import relativeTime from 'daysjs/plugin/relativeTime';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import EnhancedTable from './EnhancedTable';
 
 dayjs.extend(relativeTime)
 
@@ -42,32 +43,35 @@ class ConsumerTable extends Component {
         const { consumers } = this.state
 
         return (
-            <Paper className={classes.root}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Consumer Name</TableCell>
-                  <TableCell>Slug</TableCell>
-                  <TableCell>RedirectURI</TableCell>
-                  <TableCell>Created At</TableCell>
-                  <TableCell>Last Updated</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {consumers.map(consumer => (
-                  <TableRow key={consumer._id}>
-                    <TableCell component="th" scope="row">
-                      {consumer.display}
-                    </TableCell>
-                    <TableCell>{consumer.name.slug}</TableCell>
-                    <TableCell>{consumer.redirectURI}</TableCell>
-                    <TableCell>{dayjs(consumer.createdAt).fromNow()}</TableCell>
-                    <TableCell>{dayjs(consumer.updatedAt).fromNow()}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Paper>
+            <div>
+                <Paper className={classes.root}>
+                <Table className={classes.table}>
+                <TableHead>
+                    <TableRow>
+                    <TableCell>Consumer Name</TableCell>
+                    <TableCell>Slug</TableCell>
+                    <TableCell>RedirectURI</TableCell>
+                    <TableCell>Created</TableCell>
+                    <TableCell>Last Updated</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {consumers.map(consumer => (
+                    <TableRow key={consumer._id}>
+                        <TableCell component="th" scope="row">
+                        {consumer.display}
+                        </TableCell>
+                        <TableCell>{consumer.name.slug}</TableCell>
+                        <TableCell>{consumer.redirectURI}</TableCell>
+                        <TableCell>{dayjs(consumer.createdAt).fromNow()}</TableCell>
+                        <TableCell>{dayjs(consumer.updatedAt).fromNow()}</TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+                </Table>
+            </Paper>
+            <EnhancedTable />
+          </div>
         )
     }
 }
