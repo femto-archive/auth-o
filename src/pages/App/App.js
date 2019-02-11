@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+
 import Dashboard from '../Dashboard/Dashboard';
-import './App.css';
 import RealmRedirect from '../../components/RealmRedirect';
 
 const Index = () => <h2>Index</h2>;

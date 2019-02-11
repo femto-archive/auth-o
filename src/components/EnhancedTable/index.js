@@ -35,7 +35,7 @@ const styles = theme => ({
 
 class EnhancedTable extends Component {
     /* props {
-     *   rows: { id, numeric, disablePadding, label }
+     *   headers: { id, numeric, disablePadding, label }
      *   data: [{ a, b, c }]
      * }
      */
@@ -99,8 +99,8 @@ class EnhancedTable extends Component {
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
     render() {
-        const { classes } = this.props;
-        const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+        const { classes, data, rows } = this.props;
+        const { order, orderBy, selected, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
         return (
@@ -114,13 +114,13 @@ class EnhancedTable extends Component {
                             orderBy={orderBy}
                             onSelectAllClick={this.handleSelectAllClick}
                             onRequestSort={this.handleRequestSort}
-                            rowCount={data.length}
+                            rowCount={rows.length}
                             rows={rows}
                         />
                         <TableBody>
                             {stableSort(data, getSorting(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map(consumer => {
+                                .map(ro => {
                                     const isSelected = this.isSelected(consumer.id);
                                     return (
                                         <TableRow
