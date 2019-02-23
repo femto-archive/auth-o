@@ -84,4 +84,3 @@ const HTTPRealm = require('./http/HTTPRealm')
 
     app.listen(config.get('port'), () => console.log(`Listening on port ${config.get('port')}`))
 })()
-

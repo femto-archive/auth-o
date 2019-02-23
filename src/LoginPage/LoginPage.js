@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { CloseButton } from '../_components'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -14,8 +13,8 @@ import InputLabel from '@material-ui/core/InputLabel'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import withStyles from '@material-ui/core/styles/withStyles'
-
+import { withStyles } from '@material-ui/core/styles'
+import { AuthAppBar } from '../_components'
 import { userActions } from '../_actions'
 
 const styles = theme => ({
@@ -29,6 +28,9 @@ const styles = theme => ({
             marginLeft: 'auto',
             marginRight: 'auto',
         },
+    },
+    appbar: {
+        width: '100%',
     },
     paper: {
         marginTop: theme.spacing.unit * 8,
@@ -102,57 +104,60 @@ class LoginPage extends Component {
         const { classes } = this.props
 
         return (
-            <main className={classes.main}>
-                <CssBaseline />
-                <Paper className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Login
-                    </Typography>
-                    <form className={classes.form} onSubmit={this.handleSubmit}>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="id">Username / Email Address</InputLabel>
-                            <Input
-                                value={this.state.id}
-                                onChange={this.handleInputChange}
-                                id="id"
-                                name="id"
-                                autoComplete="email"
-                                autoFocus
-                             />
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input
-                                value={this.state.password}
-                                onChange={this.handleInputChange}
-                                name="password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                        </FormControl>
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" name="remember" checked={this.state.remember} onChange={this.handleInputChange} />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
+            <div>
+                <AuthAppBar className={classes.appbar}/>
+                <main className={classes.main}>
+                    <CssBaseline />
+                    <Paper className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
                             Login
-                        </Button>
-                        <Typography className={classes.noAccount}>
-                            Don't have an account? <Link to='/register' className={classes.register}>Register here</Link>.
                         </Typography>
-                    </form>
-                </Paper>
-            </main>
+                        <form className={classes.form} onSubmit={this.handleSubmit}>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="id">Username / Email Address</InputLabel>
+                                <Input
+                                    value={this.state.id}
+                                    onChange={this.handleInputChange}
+                                    id="id"
+                                    name="id"
+                                    autoComplete="email"
+                                    autoFocus
+                                />
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <Input
+                                    value={this.state.password}
+                                    onChange={this.handleInputChange}
+                                    name="password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                />
+                            </FormControl>
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" name="remember" checked={this.state.remember} onChange={this.handleInputChange} />}
+                                label="Remember me"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                Login
+                            </Button>
+                            <Typography className={classes.noAccount}>
+                                Don't have an account? <Link to='/register' className={classes.register}>Register here</Link>.
+                            </Typography>
+                        </form>
+                    </Paper>
+                </main>
+            </div>
         )
     }
 }

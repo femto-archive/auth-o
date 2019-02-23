@@ -7,8 +7,6 @@ import { store, persistor } from './_helpers'
 import { App } from './App'
 import * as serviceWorker from './serviceWorker'
 
-console.log(store)
-
 render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

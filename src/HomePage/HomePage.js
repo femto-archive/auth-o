@@ -18,7 +18,7 @@ class HomePage extends Component {
 
         return (
             <div>
-                <p>Hello, world!</p>
+                <p>Hello, world!  This page will eventually contain a list of activities you can partake in.  Such as visiting the admin panel, looking at the Wiki and ways of contributing.</p>
                 {
                     user.logged_in ? (
                         <div>
