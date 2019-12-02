@@ -42,7 +42,7 @@
     "express-session": "^1.15.6",
     "history": "^4.7.2",
     "mongodb": "^3.1.12",
-    "mongoose": "^5.4.5",
+    "mongoose": "^5.7.5",
     "mongoose-autopopulate": "^0.9.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
