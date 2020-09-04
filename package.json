@@ -41,7 +41,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.15.6",
     "history": "^4.7.2",
-    "mongodb": "^3.1.12",
+    "mongodb": "^3.1.13",
     "mongoose": "^5.7.5",
     "mongoose-autopopulate": "^0.9.1",
     "passport": "^0.4.0",
